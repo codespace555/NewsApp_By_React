@@ -4,8 +4,8 @@ export default class NavBar extends Component {
   render() {
     return (
       <>
-        <div>
-<nav className="flex text-center gap-x-5 h-14 border-1 px-5 py-2 bg-green-900 rounded-b-lg text-yellow-100 justify-between">
+      
+<nav className="flex text-center gap-x-5 h-14 border-1 px-5 py-2 bg-green-900 rounded-b-lg text-yellow-100 w-max-[100%] ">
     <div className=" font-bold text-2xl"><a href="#">NewsFunda</a></div>
     <div className=" md:hidden  flex-col flex justify-center navbar-line ">
       <span className=' rounded-md w-10 h-2 bg-slate-900 mb-1'></span>
@@ -20,7 +20,7 @@ export default class NavBar extends Component {
     </ul>
 </nav>
 
-        </div>
+      
       </>
     )
   }

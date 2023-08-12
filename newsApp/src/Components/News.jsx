@@ -7,15 +7,36 @@ export default class News extends Component {
     this.state = {
       articles:[],
       DataLoad: false,
+      page:1,
+      apikey:"a4fb3530c246497ba9f46d8b77c2c647"
     };
   }
+
+
  async componentDidMount() {
-    const apikey = "a4fb3530c246497ba9f46d8b77c2c647";
-    const data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=${apikey}`)
+    const data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=${this.state.apikey}&page=1&pageSize=20`)
     let res = await data.json()
-    this.setState({articles:res.articles})
-    console.log("res", res);
-      
+    this.setState({articles:res.articles , totalnews:res.totalResults})
+   
+  }
+   
+  handelNextClick = async() => {
+    const data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=${this.state.apikey}&page=${this.state.page + 1}&pageSize=20`)
+    let res = await data.json()
+    this.setState({
+      page:this.state.page+1,
+      articles:res.articles
+    })
+     console.log("polu")
+  }
+  handelPreveClick= async() => {
+    const data = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=${this.state.apikey}&page=${this.state.page - 1}&pageSize=20`)
+    let res = await data.json()
+    this.setState({
+      page:this.state.page-1,
+      articles:res.articles
+    })
+    
   }
   render() {
     function day() {
@@ -37,8 +58,8 @@ export default class News extends Component {
 </div> </div> ;
     return (
       <>
-        <div className="w-screen ">
-          <h1 className="text-left pl-5 m-2 font-bold text-3xl ">
+        <div className="w-screen h-auto p-0 ">
+          <h1 className="text-left  m-2 font-bold text-3xl ">
            NewsFunda-{day()} Top Headlines {" "}
              <span className=" text-right text-[10px]">
               {new Date().getDate()}/{new Date().getMonth()}/
@@ -46,7 +67,7 @@ export default class News extends Component {
             </span>
           </h1>
 
-          <div className="flex h-auto w-screen align-middle justify-center py-2 flex-wrap ">
+          <div className="flex h-auto w-screen align-middle justify-center py-2 flex-wrap pr-10 ">
             {this.state.articles.map((element) => {
               return (
                 element.urlToImage?
@@ -60,6 +81,10 @@ export default class News extends Component {
                 />:""
               );
             })}
+          </div>
+          <div className="flex justify-between px-20">
+            <button disabled = {this.state.page <= 1}  className=' font-bold border-2 w-36 h-10 rounded-md mt-2 bg-green-700 text-white flex justify-around pt-2 align-middle hover:bg-green-900 delay-150 'onClick={this.handelPreveClick}>  <span> &#x2190;</span>  Previous</button>
+            <button disabled = {this.state.page + 1 > Math.ceil(this.state.totalnews/20)}  className=' font-bold border-2 w-36 h-10 rounded-md mt-2 bg-green-700 text-white flex justify-around pt-2 align-middle hover:bg-green-900 delay-150 ' onClick={this.handelNextClick}>Next <span>&#x2192;</span> </button>
           </div>
         </div>
       </>

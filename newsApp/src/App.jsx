@@ -6,7 +6,7 @@ export default class App extends Component {
   render() {
     return (
       <>
-        <div className="h-auto bg-light-white ">
+        <div className="h-auto bg-light-white w-screen ">
           <NavBar />
           <News />
         </div>

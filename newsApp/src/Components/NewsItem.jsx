@@ -12,7 +12,7 @@ export default class NewsItem extends Component {
       <a href={readmoreUrl} target='-blank'> <button className=' border-2 w-44 h-10 rounded-md mt-2 bg-green-700 text-white hover:bg-green-900 delay-150 '>Read More...</button></a>
      
       </div>
-      <h3 className=' p-1 text-right'>Author- <span className='text-blue-700'>{author}</span></h3>
+      <h3 className=' p-1 relative text-right'>Author- <span className='text-blue-700'>{author}</span></h3>
       </div>
     )
   }
