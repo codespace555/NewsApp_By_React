@@ -1,18 +1,16 @@
-
-import './App.css'
-import React, { Component } from 'react'
-import NavBar from './Components/NavBar'
-
+import "./App.css";
+import React, { Component } from "react";
+import NavBar from "./Components/NavBar";
+import News from "./Components/News";
 export default class App extends Component {
   render() {
     return (
       <>
-      <div className="h-screen bg-light-primary dark:bg-dark-primary">
-     <NavBar />
-      </div>
+        <div className="h-auto bg-light-white ">
+          <NavBar />
+          <News />
+        </div>
       </>
-    )
+    );
   }
 }
-
- 
