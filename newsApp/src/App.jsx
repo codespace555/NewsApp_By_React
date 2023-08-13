@@ -9,7 +9,7 @@ export default class App extends Component {
       <>
         <div className="h-auto bg-light-white w-screen ">
           <NavBar />
-          <News />
+          <News pageSize = "8"/>
           <Footersec />
         </div>
       </>
