@@ -10,7 +10,7 @@ export default class App extends Component {
     return (
       <>
         <BrowserRouter>
-          <div className="h-auto bg-light-white " activeStyle={{ color:'#5754a8' }}>
+          <div className="h-auto bg-light-white " >
             <NavBar />
             <Category />
             <Routes>

@@ -41,11 +41,11 @@ export default class News extends Component {
   handelNextClick = async () => {
     this.setState({ DataLoad: true });
     const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${
-        this.props.category
-      }&apiKey=${this.state.apikey}&page=${this.state.page + 1}&pageSize=${
-        this.props.pageSize
-      }`
+      `https://newsapi.org/v2/top-headlines?country=${
+        this.props.country
+      }&category=${this.props.category}&apiKey=${this.state.apikey}&page=${
+        this.state.page + 1
+      }&pageSize=${this.props.pageSize}`
     );
     let res = await data.json();
     this.setState({
@@ -58,11 +58,11 @@ export default class News extends Component {
   handelPreveClick = async () => {
     this.setState({ DataLoad: true });
     const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${
-        this.props.category
-      }&apiKey=${this.state.apikey}&page=${this.state.page - 1}&pageSize=${
-        this.props.pageSize
-      }`
+      `https://newsapi.org/v2/top-headlines?country=${
+        this.props.country
+      }&category=${this.props.category}&apiKey=${this.state.apikey}&page=${
+        this.state.page - 1
+      }&pageSize=${this.props.pageSize}`
     );
     let res = await data.json();
     this.setState({
@@ -114,8 +114,12 @@ export default class News extends Component {
                         : "Not Available"
                     }
                     imgsrc={element.urlToImage}
-                    author={element.author? element.author : "Not Available"}
+                    author={element.author ? element.author : "Not Available"}
                     readmoreUrl={element.url}
+                    newsDate={element.publishedAt.slice(0, 10)}
+                    source={element.source.name}
+
+
                   />
                 ) : (
                   ""
