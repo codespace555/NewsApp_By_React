@@ -5,7 +5,7 @@ export default class Footersec extends Component {
   
     return (
       <>
-        <footer className="footer bg-green-900 h-[200px]  w-screen mt-10">
+        <footer className="footer bg-green-900 h-[200px]  w-[100%] mt-10">
           <div className="start text-white flex justify-between px-10 py-4">
             <div className="connect  text-center text-2xl">
               <h1 className="underline mb-1">Connect With Us</h1>
@@ -47,7 +47,7 @@ export default class Footersec extends Component {
           </div>
 
           <div className="footerend">
-            <p className="text-center bg-slate-900 p-4 text-white w-screen  ">
+            <p className="text-center bg-slate-900 p-4 text-white  ">
               Copyright © 2021. All rights reserved.
             </p>
           </div>

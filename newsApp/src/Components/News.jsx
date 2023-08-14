@@ -2,7 +2,19 @@ import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Loading from "./Loading";
 
+import PropTypes from "prop-types";
+
 export default class News extends Component {
+  static defaultProps = {
+    country: "in",
+    pageSize: 8,
+    category: "general",
+  };
+  static propTypes = {
+    country: PropTypes.string,
+    category: PropTypes.string,
+  };
+
   constructor() {
     super();
     this.state = {
@@ -16,9 +28,9 @@ export default class News extends Component {
   async componentDidMount() {
     this.setState({ DataLoad: true });
     const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=in&apiKey=${this.state.apikey}&page=1&pageSize=${this.props.pageSize}`
-      );
-      let res = await data.json();
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.apikey}&page=1&pageSize=${this.props.pageSize}`
+    );
+    let res = await data.json();
     this.setState({
       articles: res.articles,
       totalnews: res.totalResults,
@@ -29,10 +41,12 @@ export default class News extends Component {
   handelNextClick = async () => {
     this.setState({ DataLoad: true });
     const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=in&apiKey=${
-        this.state.apikey
-      }&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
-      );
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${
+        this.props.category
+      }&apiKey=${this.state.apikey}&page=${this.state.page + 1}&pageSize=${
+        this.props.pageSize
+      }`
+    );
     let res = await data.json();
     this.setState({
       page: this.state.page + 1,
@@ -44,10 +58,12 @@ export default class News extends Component {
   handelPreveClick = async () => {
     this.setState({ DataLoad: true });
     const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=in&apiKey=${
-        this.state.apikey
-      }&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`
-      );
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${
+        this.props.category
+      }&apiKey=${this.state.apikey}&page=${this.state.page - 1}&pageSize=${
+        this.props.pageSize
+      }`
+    );
     let res = await data.json();
     this.setState({
       page: this.state.page - 1,
@@ -72,16 +88,16 @@ export default class News extends Component {
 
     return (
       <>
-        <div className=" h-auto p-0 ">
-          <h1 className="text-left  m-2 font-bold text-3xl ">
+        <div className="  w-[100%] border-gray-700">
+          <h1 className="text-center  m-2 font-bold text-3xl ">
             NewsFunda-{day()} Top Headlines{" "}
             <span className=" text-right text-[10px]">
               {new Date().getDate()}/{new Date().getMonth()}/
               {new Date().getFullYear()}
             </span>
           </h1>
-          {this.stateDataLoad && <Loading />}
-          <div className="flex h-auto w-screen  py-2 flex-wrap">
+          {this.state.DataLoad && <Loading />}
+          <div className="flex h-auto   py-2 flex-wrap justify-center">
             {!this.state.DataLoad &&
               this.state.articles.map((element) => {
                 return element.urlToImage ? (
@@ -98,7 +114,7 @@ export default class News extends Component {
                         : "Not Available"
                     }
                     imgsrc={element.urlToImage}
-                    author={element.author ? element.author : "Not Available"}
+                    author={element.author? element.author : "Not Available"}
                     readmoreUrl={element.url}
                   />
                 ) : (
@@ -112,7 +128,6 @@ export default class News extends Component {
               className="disabled:opacity-25 font-bold border-2 w-36 h-10 rounded-md mt-2 bg-green-700 text-white flex justify-around pt-2 align-middle hover:bg-green-900 delay-150 "
               onClick={this.handelPreveClick}
             >
-              {" "}
               <span> &#x2190;</span> Previous
             </button>
             <button
