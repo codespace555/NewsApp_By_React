@@ -1,73 +1,68 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Loading from "./Loading";
-
+import InfiniteScroll from "react-infinite-scroll-component";
 import PropTypes from "prop-types";
+import Topbtn from "./TopBtn";
+
 
 export default class News extends Component {
   static defaultProps = {
     country: "in",
-    pageSize: 8,
+    pageSize: 12,
     category: "general",
+    apikey: import.meta.env.VITE_API_KEY,
   };
   static propTypes = {
     country: PropTypes.string,
     category: PropTypes.string,
   };
-
-  constructor() {
-    super();
-    this.state = {
+  FirstletterUpperCase(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  constructor(props) {
+    super(props);
+    this.state = { 
       articles: [],
       DataLoad: false,
       page: 1,
-      apikey: "a4fb3530c246497ba9f46d8b77c2c647",
+      totalnews: 0,
     };
+    document.title = `${this.FirstletterUpperCase(
+      this.props.category
+    )} | NewsFunda`;
   }
 
-  async componentDidMount() {
+  async updateData() {
+    this.props.setProgress(10)
     this.setState({ DataLoad: true });
+    this.props.setProgress(30)
     const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.apikey}&page=1&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
     );
+    console.log( `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page}&pageSize=${this.props.pageSize}`)
+    this.props.setProgress(50)
     let res = await data.json();
     this.setState({
       articles: res.articles,
       totalnews: res.totalResults,
       DataLoad: false,
     });
+    this.props.setProgress(100)
   }
 
-  handelNextClick = async () => {
-    this.setState({ DataLoad: true });
+ async componentDidMount() {
+     this.updateData();
+  }
+  fetchMoreData = async () => {
+    this.setState({page: this.state.page + 1})
+    console.log(this.state.page)
     const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=${
-        this.props.country
-      }&category=${this.props.category}&apiKey=${this.state.apikey}&page=${
-        this.state.page + 1
-      }&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
     );
     let res = await data.json();
     this.setState({
-      page: this.state.page + 1,
-      articles: res.articles,
-      DataLoad: false,
-    });
-    console.log("polu");
-  };
-  handelPreveClick = async () => {
-    this.setState({ DataLoad: true });
-    const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=${
-        this.props.country
-      }&category=${this.props.category}&apiKey=${this.state.apikey}&page=${
-        this.state.page - 1
-      }&pageSize=${this.props.pageSize}`
-    );
-    let res = await data.json();
-    this.setState({
-      page: this.state.page - 1,
-      articles: res.articles,
+      articles: this.state.articles.concat(res.articles),
       DataLoad: false,
     });
   };
@@ -90,19 +85,25 @@ export default class News extends Component {
       <>
         <div className="  w-[100%] border-gray-700">
           <h1 className="text-center  m-2 font-bold text-3xl ">
-            NewsFunda-{day()} Top Headlines{" "}
+            NewsFunda-{day()} Top{" "}
+            {`${this.FirstletterUpperCase(this.props.category)}`} Headlines
             <span className=" text-right text-[10px]">
-              {new Date().getDate()}/{new Date().getMonth()}/
-              {new Date().getFullYear()}
+              {" "}
+              <br />
             </span>
           </h1>
           {this.state.DataLoad && <Loading />}
-          <div className="flex h-auto   py-2 flex-wrap justify-center">
-            {!this.state.DataLoad &&
-              this.state.articles.map((element) => {
-                return element.urlToImage ? (
+          <InfiniteScroll
+            dataLength={this.state.articles.length}
+            next={this.fetchMoreData}
+            hasMore={this.state.articles.length !== this.state.totalnews}
+            loader={<Loading />}
+          >
+            <div className="flex h-auto py-2 flex-wrap justify-center">
+              {!this.state.DataLoad &&this.state.articles.map((element,index) => {
+                return (
                   <NewsItem
-                    key={element.url}
+                    key={index}
                     title={
                       element.title
                         ? element.title.slice(0, 88)
@@ -113,38 +114,22 @@ export default class News extends Component {
                         ? element.description
                         : "Not Available"
                     }
-                    imgsrc={element.urlToImage}
+                    imgsrc={element.urlToImage ? element.urlToImage : "https://media.istockphoto.com/id/1330788505/vector/news-paper-care-logo-template-design.jpg?s=612x612&w=0&k=20&c=c9loKIAmPQ06pPh07dJny2iNKEv4BMhMXPZx9AGf8VE=" }
                     author={element.author ? element.author : "Not Available"}
                     readmoreUrl={element.url}
                     newsDate={element.publishedAt.slice(0, 10)}
                     source={element.source.name}
-
-
                   />
-                ) : (
-                  ""
-                );
+                ) 
               })}
-          </div>
-          <div className="flex justify-between px-20">
-            <button
-              disabled={this.state.page <= 1}
-              className="disabled:opacity-25 font-bold border-2 w-36 h-10 rounded-md mt-2 bg-green-700 text-white flex justify-around pt-2 align-middle hover:bg-green-900 delay-150 "
-              onClick={this.handelPreveClick}
-            >
-              <span> &#x2190;</span> Previous
-            </button>
-            <button
-              disabled={
-                this.state.page + 1 >
-                Math.ceil(this.state.totalnews / this.props.pageSize)
-              }
-              className="disabled:opacity-25 font-bold border-2 w-36 h-10 rounded-md mt-2 bg-green-700 text-white flex justify-around pt-2 align-middle hover:bg-green-900 delay-150 "
-              onClick={this.handelNextClick}
-            >
-              Next <span>&#x2192;</span>{" "}
-            </button>
-          </div>
+            </div>
+          </InfiniteScroll>
+<div className=" ml-5 fixed bottom-0 my-5 font-semibold bg-green-700 text-white p-2 rounded-md text-[0.5rem] opacity-[0.6]">
+  Date - 
+{new Date().getDate()}/{new Date().getMonth()}/
+              {new Date().getFullYear()}
+</div>
+          <Topbtn/>
         </div>
       </>
     );
