@@ -1,20 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-export default class Category extends Component {
-  render() {
-    return (
-      <div className='bg-green-700 h-auto w-[100%] py-5 rounded-b-full px-10'>
-        <ul className='flex justify-center font-semibold gap-x-12 gap-y-7 flex-wrap text-yellow-100 md:text-xl text-[0.5rem]'>
-        <li><NavLink to="/general">General</NavLink></li>
-              <li><NavLink to="/business">Business</NavLink></li>
-              <li><NavLink to="/entertainment">Entertainment</NavLink></li>
-              <li><NavLink to="/health">Health</NavLink></li>
-              <li><NavLink to="/science">Science</NavLink></li>
-              <li><NavLink to="/sports">Sports</NavLink></li>
-              <li><NavLink to="/technology">Technology</NavLink></li>
+export default function Category({click}) {
+  return (
+    <>
+         <div className=''>
+        <ul className='md:flex gap-5'>
+        <li className="md:border-none border-b-2 py-2"><NavLink to="/general">General</NavLink></li>
+              <li className="md:border-none border-b-2 py-2"><NavLink to="/business" onClick={click}>Business</NavLink></li>
+
+              <li className="md:border-none border-b-2 py-2"><NavLink to="/entertainment" onClick={click}>Entertainment</NavLink></li>
+
+              <li className="md:border-none border-b-2 py-2"><NavLink to="/health" onClick={click}>Health</NavLink></li>
+
+              <li className="md:border-none border-b-2 py-2"><NavLink to="/science" onClick={click}>Science</NavLink></li>
+
+              <li className="md:border-none border-b-2 py-2"><NavLink to="/sports" onClick={click}>Sports</NavLink></li>
+              
+              <li className="md:border-none border-b-2 py-2"><NavLink to="/technology" onClick={click}>Technology</NavLink></li>
         </ul>
       </div>
-    )
-  }
+    </>
+  )
 }
+

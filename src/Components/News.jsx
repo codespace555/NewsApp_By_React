@@ -40,7 +40,7 @@ export default class News extends Component {
     const data = await fetch(
       `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
     );
-    console.log( `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page}&pageSize=${this.props.pageSize}`)
+   
     this.props.setProgress(50)
     let res = await data.json();
     this.setState({
@@ -55,11 +55,10 @@ export default class News extends Component {
      this.updateData();
   }
   fetchMoreData = async () => {
-    this.setState({page: this.state.page + 1})
-    console.log(this.state.page)
     const data = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
     );
+    this.setState({page: this.state.page + 1})
     let res = await data.json();
     this.setState({
       articles: this.state.articles.concat(res.articles),
@@ -84,7 +83,7 @@ export default class News extends Component {
     return (
       <>
         <div className="  w-[100%] border-gray-700">
-          <h1 className="text-center  m-2 font-bold text-3xl ">
+          <h1 className="text-center  mt-[100px] font-bold text-3xl ">
             NewsFunda-{day()} Top{" "}
             {`${this.FirstletterUpperCase(this.props.category)}`} Headlines
             <span className=" text-right text-[10px]">

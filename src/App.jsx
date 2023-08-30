@@ -19,7 +19,7 @@ export default class App extends Component {
           <div className="h-auto bg-light-white overflow-hidden">
             <NavBar />
            
-            <Category />
+            
             <LoadingBar
               color="#f11946"
               height={5}
