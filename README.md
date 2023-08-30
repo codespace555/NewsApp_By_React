@@ -2,7 +2,7 @@
 
 The News Vite + React App is a web application built with Vite that allows users to browse and read news articles from various sources and categories. It utilizes the News API to fetch the latest news data and presents it in an easy-to-use and responsive interface. Users can choose from different news categories to stay informed about the topics they are interested in.
 
-![News Vite + React App Screenshot](Untitled%20video%20-%20Made%20with%20Clipchamp.mp4)
+![News Vite + React App Screenshot](https://github.com/codespace555/NewsApp_By_React/blob/main/public/Screenshot%202023-08-30%20164333.png)
 
 ## Features
 
