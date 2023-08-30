@@ -4,8 +4,8 @@ The News Vite + React App is a web application built with Vite that allows users
 
 ![News Vite + React App Screenshot](https://github.com/codespace555/NewsApp_By_React/blob/main/public/Screenshot%202023-08-30%20164333.png)
 ![News Vite + React App Screenshot](https://github.com/codespace555/NewsApp_By_React/blob/main/public/Screenshot%202023-08-30%20164354.png)
-![News Vite + React App Screenshot](https://github.com/codespace555/NewsApp_By_React/blob/main/public/Screenshot%202023-08-30%20164333.png)
-![News Vite + React App Screenshot](https://github.com/codespace555/NewsApp_By_React/blob/main/public/Screenshot%202023-08-30%20164333.png)
+![News Vite + React App Screenshot](https://github.com/codespace555/NewsApp_By_React/blob/main/public/Screenshot%202023-08-30%20164504.png)
+![News Vite + React App Screenshot](https://github.com/codespace555/NewsApp_By_React/blob/main/public/Screenshot%202023-08-30%20164522.png)
 
 ## Features
 
