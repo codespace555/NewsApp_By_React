@@ -101,7 +101,7 @@ export default class News extends Component {
             <div className="flex h-auto py-2 flex-wrap justify-center">
               {!this.state.DataLoad &&this.state.articles.map((element,index) => {
                 return (
-                  <NewsItem
+                  element.urlToImage ?  <NewsItem
                     key={index}
                     title={
                       element.title
@@ -119,6 +119,7 @@ export default class News extends Component {
                     newsDate={element.publishedAt.slice(0, 10)}
                     source={element.source.name}
                   />
+                  : ""
                 ) 
               })}
             </div>
